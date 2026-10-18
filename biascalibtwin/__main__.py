@@ -210,7 +210,7 @@ def evaluate(c, out):
     ids = p['test_ids']
     mean, variance = p['test_mean'], p['test_variance']
     residual = d['truth'][ids] - mean
-    unmeasured = ~d['metro_mask'][ids].all(-1)
+    unmeasured = ~d['metro_mask'][ids].astype(bool)
     sigma = np.sqrt(variance.clip(1e-12))
     z = residual / sigma
     crps = sigma * (z * (2 * ndtr(z) - 1) + 2 * np.exp(-z ** 2 / 2) / np.sqrt(2 * np.pi) - 1 / np.sqrt(np.pi))
